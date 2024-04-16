@@ -1,12 +1,13 @@
 <template>
   <div>
-    <div class="list-item" v-for="(pokemon, index) in pokemons" :key="index" @click="selectPokemon(pokemon)">
+    <!-- Search input field -->
+    <input type="text" v-model="searchQuery" placeholder="Search Pokémon">
+    <div class="list-item" v-for="(pokemon, index) in filteredPokemons" :key="index" @click="selectPokemon(pokemon)">
       <div class="red-section">
         <img :src="pokemon.image" :alt="pokemon.name">
       </div>
       <div class="title-section">
         <h3>{{ pokemon.name }}</h3>
-    
       </div>
     </div>
   </div>
@@ -16,8 +17,17 @@
 export default {
   data() {
     return {
-      pokemons: []
+      pokemons: [],
+      searchQuery: '' // Data property for storing search query
     };
+  },
+  computed: {
+    // Computed property to filter pokemons based on searchQuery
+    filteredPokemons() {
+      return this.pokemons.filter(pokemon =>
+        pokemon.name.toLowerCase().includes(this.searchQuery.toLowerCase())
+      );
+    }
   },
   mounted() {
     this.fetchAllPokemons();
@@ -78,6 +88,11 @@ export default {
   }
 };
 </script>
+
+<style scoped>
+/* Your existing styles */
+</style>
+
 
 <style scoped>
 @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');

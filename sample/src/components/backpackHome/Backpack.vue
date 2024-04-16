@@ -48,6 +48,7 @@ function hideDescription() {
               <div class="itemBack">
                 <div class="itemListBack">
                   <div class="row itemListCol">
+
                     <router-link to="/backpack/pokedex"> 
                       <div class="col itemList" @mouseover="showDescription('pokedex')" @mouseleave="hideDescription()">
                       <!-- Pokedex -->
@@ -61,9 +62,13 @@ function hideDescription() {
                     </router-link>
                     
                   </div>
+                  <router-link to="/backpack/quizHome"> 
                   <div class="row">
                     <div class="col itemList" @mouseover="showDescription('quiz')" @mouseleave="hideDescription()">
                       <!-- Quiz -->
+
+                    
+                      
                       <div class="p-3 itemListFlex">
                         <div>
                           <h2><img src="/src/assets/play-solid.svg" class="iconSelector"/>Quiz</h2>
@@ -72,6 +77,7 @@ function hideDescription() {
                       </div>
                     </div>
                   </div>
+                </router-link>
                   <div class="row">
                     <div class="col itemList" @mouseover="showDescription('home')" @mouseleave="hideDescription()">
                       <!-- Home -->
