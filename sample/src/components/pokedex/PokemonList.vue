@@ -1,11 +1,12 @@
 <template>
   <div>
-    <div class="list-item" v-for="(pokemon, index) in pokemons" :key="index">
+    <div class="list-item" v-for="(pokemon, index) in pokemons" :key="index" @click="selectPokemon(pokemon)">
       <div class="red-section">
         <img :src="pokemon.image" :alt="pokemon.name">
       </div>
       <div class="title-section">
-        <h1>{{ pokemon.name }}</h1>
+        <h3>{{ pokemon.name }}</h3>
+    
       </div>
     </div>
   </div>
@@ -32,10 +33,16 @@ export default {
           
           for (const pokemon of data.results) {
             const pokemonData = await this.fetchPokemonData(pokemon.url);
-            this.pokemons.push({
-              name: pokemon.name,
-              image: pokemonData.sprites.front_default
-            });
+            const speciesData = await this.fetchSpeciesData(pokemonData.species.url); // Fetch species data
+            if (speciesData) {
+              this.pokemons.push({
+                name: pokemon.name,
+                image: pokemonData.sprites.front_default,
+                flavorText: speciesData
+              });
+            } else {
+              console.error('Error fetching species data for', pokemon.name);
+            }
           }
           
           nextUrl = data.next;
@@ -53,6 +60,20 @@ export default {
         console.error('Error fetching Pokémon data:', error);
         return null;
       }
+    },
+    async fetchSpeciesData(url) {
+      try {
+        const response = await fetch(url);
+        const data = await response.json();
+        const flavorText = data.flavor_text_entries.find(entry => entry.language.name === 'en').flavor_text;
+        return flavorText;
+      } catch (error) {
+        console.error('Error fetching species data:', error);
+        return null;
+      }
+    },
+    selectPokemon(pokemon) {
+      this.$emit('pokemon-clicked', pokemon); // Emit pokemon-clicked event with selected pokemon
     }
   }
 };

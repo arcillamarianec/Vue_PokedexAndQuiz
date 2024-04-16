@@ -1,41 +1,50 @@
-<script>
-import 'animate.css';
-</script>
 <template>
-    <main>
-        <link
-    rel="stylesheet"
-    href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
-  />
-      <div class="title animate__animated animate__zoomIn">{{"Bulbasaur"}}</div>
-      <div class="image-container">
-        <img src="/src/assets/1.png" class="pokemonPic animate__animated animate__zoomIn">
-        <img src="/src/assets/pokeballshadow.png" class="pokeballShadow animate__animated animate__zoomIn">
-      </div>
-      <div class="desc animate__animated animate__zoomIn">{{"Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. "}}</div>
-    </main>
-  </template>
+  <div>
+    <div v-if="selectedPokemon" class="title animate__animated animate__zoomIn">{{ selectedPokemon.name }}</div>
+    <div v-if="selectedPokemon" class="image-container">
+      <img :src="selectedPokemon.image" class="pokemonPic animate__animated animate__zoomIn">
+      <img src="/src/assets/pokeballshadow.png" class="pokeballShadow animate__animated animate__zoomIn">
+    </div>
+    <div v-if="selectedPokemon" class="desc animate__animated animate__zoomIn">{{ selectedPokemon.flavorText }}</div> <!-- Display flavor text -->
+  </div>
+</template>
+
+<script>
+export default {
+  props: ['selectedPokemon'], // Receive selectedPokemon as a prop
+};
+</script>
+
   
   <style scoped>
   @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
   
-  .pokemonPic {
-    height: 90%;
-    position: absolute;
-    top: 0%; /* Adjust to center vertically */
-    left: 50%;
-    transform: translateX(-50%);
-    z-index: 1;
-  }
-  
-  .pokeballShadow {
-    height: 50%;
-    width: 90%;
-    position: absolute;
-    top: 18%; /* Adjust to center vertically */
-    left: 50%;
-    transform: translateX(-50%);
-  }
+  .image-container {
+  position: relative; /* Ensure relative positioning for absolute elements */
+  height: 60vh;
+  display: flex;
+  justify-content: center; /* Center horizontally */
+  align-items: center; /* Center vertically */
+}
+
+.pokemonPic {
+  height: 90%; /* Adjust height as needed */
+  position: absolute;
+  top: 50%; /* Center vertically */
+  left: 42%; /* Center horizontally */
+  transform: translate(-50%, -50%); /* Center the image */
+  z-index: 1;
+}
+
+.pokeballShadow {
+  height: 50%; /* Adjust height as needed */
+  width: 90%;
+  position: absolute;
+  top: 50%; /* Center vertically */
+  left: 42%; /* Center horizontally */
+  transform: translate(-50%, -50%); /* Center the shadow */
+}
+
   
   main {
     display: flex;
@@ -71,7 +80,7 @@ import 'animate.css';
   }
   
   .desc {
-    font-size: 12px;
+    font-size: 16px;
     padding: 10px;
     bottom: 0; /* Position at the bottom */
     transform: translateY(-20%);

@@ -1,17 +1,26 @@
-<script setup>
+<script>
 import PokemonList from '../pokedex/PokemonList.vue'
+
+export default {
+  components: {
+    PokemonList
+  },
+  methods: {
+    handlePokemonClicked(pokemon) {
+      this.$emit('pokemon-clicked', pokemon); // Emit the pokemon-clicked event to parent
+    }
+  }
+};
 </script>
 
 <template>
-    <div class="rounded-rectangle">
-<div class="list-container">
-    <PokemonList/>
-     
-</div>
-        
-       
+  <div class="rounded-rectangle">
+    <div class="list-container">
+      <PokemonList @pokemon-clicked="handlePokemonClicked"/> <!-- Listen for pokemon-clicked event -->
     </div>
-  </template>
+  </div>
+</template>
+
   
   <style scoped>
   .rounded-rectangle {
