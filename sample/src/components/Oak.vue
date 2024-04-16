@@ -2,7 +2,6 @@
 import { onMounted } from "vue";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import Lenis from "@studio-freight/lenis";
 import { useRouter } from "vue-router";
 
 onMounted(() => {
@@ -34,35 +33,16 @@ onMounted(() => {
     },
   });
 
-  // const lenis = new Lenis();
-
-  // lenis.on("scroll", (e) => {
-  //   console.log(e);
-  // });
-
-  // function raf(time) {
-  //   lenis.raf(time);
-  //   requestAnimationFrame(raf);
-  // }
-
-  // requestAnimationFrame(raf);
-
-// Function to play background music
-const playBackgroundMusic = () => {
-  const audio = new Audio('../assets/music1.mp3');
-  audio.setAttribute('muted', 'true');
-  audio.setAttribute('autoplay', 'true');
-  audio.setAttribute('loop', 'true');
-  document.body.appendChild(audio);
-};
-
   // Play background music when component is mounted
-  playBackgroundMusic();
+  const audio = new Audio("/src/assets/music1.mp3");
+  audio.setAttribute("autoplay", true);
+  audio.setAttribute("loop", true);
+  audio.play();
 });
 </script>
+
 <template>
   <section class="oakSec animate__animated animate__fadeOut animate__delay-5s">
-    <audio src="../assets/music1.mp3" autoplay loop></audio>
     <div class="container">
       <div class="col">
         <div class="row">
@@ -74,8 +54,8 @@ const playBackgroundMusic = () => {
       </div>
     </div>
   </section>
-  <!-- <img src="../assets/backpack.png" alt="" class="" /> -->
 </template>
+
 <style scoped>
 @import url("https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap");
 * {
