@@ -44,6 +44,7 @@
 
 <script>
 import axios from "axios";
+import Swal from 'sweetalert2';
 
 export default {
   name: "App",
@@ -136,12 +137,18 @@ export default {
       }, 1000);
     },
     endGame() {
-      clearInterval(this.timer);
-      this.gameStarted = false;
-      this.gameOver = true;
-      // Display the JavaScript prompt for the final score
-      this.displayFinalScore();
-    },
+  clearInterval(this.timer);
+  this.gameStarted = false;
+  this.gameOver = true;
+  
+  // Display SweetAlert2 alert with the final score
+  Swal.fire({
+    icon: 'info',
+    title: 'Game Over!',
+    text: `Your final score: ${this.score}`,
+    confirmButtonText: 'OK'
+  });
+},
     displayFinalScore() {
       alert("Game Over! Your final score: " + this.score);
     },
