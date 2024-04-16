@@ -25,7 +25,7 @@ onMounted(() => {
             text: "Behold, a trusty backpack for your Pokémon adventures! Carry your dreams across vast landscapes.",
             onComplete: () => {
               gsap.to(".oakSec", { opacity: 0, duration: 3, onComplete: () => {
-                router.push({ name: "Backpack" });
+                router.push({ name: "Backpack" }); 
               } });
             },
           });

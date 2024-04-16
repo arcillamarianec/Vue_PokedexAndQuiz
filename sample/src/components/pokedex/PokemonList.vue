@@ -1,35 +1,83 @@
-<script>
-
-</script>
 <template>
-    <div class="list-item ">
+  <div>
+    <div class="list-item" v-for="(pokemon, index) in pokemons" :key="index">
       <div class="red-section">
-        <img src="/src/assets/pokeball.png">
+        <img :src="pokemon.image" :alt="pokemon.name">
       </div>
       <div class="title-section">
-        <h1>{{ "Bulbasaur" }}</h1>
+        <h1>{{ pokemon.name }}</h1>
       </div>
     </div>
-  </template>
-  
-  <style scoped>
- @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+  </div>
+</template>
 
-  img {
-    height: 13vh;
+<script>
+export default {
+  data() {
+    return {
+      pokemons: []
+    };
+  },
+  mounted() {
+    this.fetchAllPokemons();
+  },
+  methods: {
+    async fetchAllPokemons() {
+      try {
+        let nextUrl = 'https://pokeapi.co/api/v2/pokemon';
+        
+        while (nextUrl) {
+          const response = await fetch(nextUrl);
+          const data = await response.json();
+          
+          for (const pokemon of data.results) {
+            const pokemonData = await this.fetchPokemonData(pokemon.url);
+            this.pokemons.push({
+              name: pokemon.name,
+              image: pokemonData.sprites.front_default
+            });
+          }
+          
+          nextUrl = data.next;
+        }
+      } catch (error) {
+        console.error('Error fetching Pokémon:', error);
+      }
+    },
+    async fetchPokemonData(url) {
+      try {
+        const response = await fetch(url);
+        const data = await response.json();
+        return data;
+      } catch (error) {
+        console.error('Error fetching Pokémon data:', error);
+        return null;
+      }
+    }
   }
-  
-  .list-item {
-    display: flex;
-    align-items: center;
-    border: 2px solid black;
-    overflow:hidden;
-    padding: auto;
-  }
-  .list-item:hover {
-  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2); /* Add elevation effect */
+};
+</script>
+
+<style scoped>
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+
+img {
+  height: 13vh;
+}
+
+.list-item {
+  display: flex;
+  align-items: center;
+  border: 2px solid black;
+  overflow: hidden;
+  padding: auto;
+  margin-bottom: 10px; /* Added margin between list items */
+}
+
+.list-item:hover {
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
   border: 3px solid red;
-  border-radius: 50px; /* Rounded corners */
+  border-radius: 50px;
   transform: scale(1.2);
   z-index: 4;
   background-color: white;
@@ -37,20 +85,19 @@
   scroll-margin: 8vh;
 }
 
-  .red-section {
-    display: flex; /* Added */
-    width: auto; /* One-third of the width */
-    height: 100%;
-    background-color: red;
-    overflow: hidden; /* Hide content that exceeds the container */
-  }
-  
-  .title-section {
-    flex: 1; /* Remaining two-thirds of the width */
-    padding-left: 20px; /* Add padding for better spacing */
-  font-family: "Press Start 2P", system-ui;
-  font-size: 1.2vw;  
+.red-section {
+  display: flex;
+  width: auto;
   height: 100%;
-  }
-  </style>
-  
+  background-color: red;
+  overflow: hidden;
+}
+
+.title-section {
+  flex: 1;
+  padding-left: 20px;
+  font-family: "Press Start 2P", system-ui;
+  font-size: 1.2vw;
+  height: 100%;
+}
+</style>

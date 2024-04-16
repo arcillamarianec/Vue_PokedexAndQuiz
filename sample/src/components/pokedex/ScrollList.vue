@@ -6,15 +6,7 @@ import PokemonList from '../pokedex/PokemonList.vue'
     <div class="rounded-rectangle">
 <div class="list-container">
     <PokemonList/>
-        <PokemonList/>
-        <PokemonList/>
-        <PokemonList/>
-        <PokemonList/>
-        <PokemonList/>
-        <PokemonList/>
-        <PokemonList/>
-        <PokemonList/>
-        <PokemonList/>
+     
 </div>
         
        
