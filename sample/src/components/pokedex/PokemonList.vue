@@ -1,7 +1,7 @@
 <template>
+    <input type="text" v-model="searchQuery" placeholder="Search Pokémon">
   <div>
     <!-- Search input field -->
-    <input type="text" v-model="searchQuery" placeholder="Search Pokémon">
     <div class="list-item" v-for="(pokemon, index) in filteredPokemons" :key="index" @click="selectPokemon(pokemon)">
       <div class="red-section">
         <img :src="pokemon.image" :alt="pokemon.name">
@@ -11,6 +11,7 @@
       </div>
     </div>
   </div>
+  
 </template>
 
 <script>
@@ -90,11 +91,6 @@ export default {
 </script>
 
 <style scoped>
-/* Your existing styles */
-</style>
-
-
-<style scoped>
 @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
 
 img {
@@ -104,10 +100,13 @@ img {
 .list-item {
   display: flex;
   align-items: center;
-  border: 2px solid black;
+  /* border: 2px solid black; */
+  border-top: 2px solid black;
+  border-bottom: 1px solid black;
   overflow: hidden;
   padding: auto;
-  margin-bottom: 10px; /* Added margin between list items */
+  text-transform: capitalize;
+  cursor: pointer;
 }
 
 .list-item:hover {
@@ -119,6 +118,7 @@ img {
   background-color: white;
   margin-left: 8vh;
   scroll-margin: 8vh;
+  cursor: pointer;
 }
 
 .red-section {
@@ -135,5 +135,6 @@ img {
   font-family: "Press Start 2P", system-ui;
   font-size: 1.2vw;
   height: 100%;
+  text-transform: capitalize;
 }
 </style>

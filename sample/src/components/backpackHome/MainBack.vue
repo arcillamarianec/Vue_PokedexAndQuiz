@@ -19,7 +19,6 @@ const itemPreviewImage = ref("/src/assets/backpack.png");
 * {
   font-family: "Press Start 2P", sans-serif;
   padding: 0;
-  margin: 0;
 }
 body {
   margin: 0;

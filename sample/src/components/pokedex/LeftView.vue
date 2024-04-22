@@ -77,6 +77,7 @@ export default {
   .title {
     font-size: 2vw;  
     padding: 2vh;
+    text-transform: capitalize;
   }
   
   .desc {

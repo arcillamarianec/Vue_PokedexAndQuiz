@@ -4,12 +4,18 @@
       <h1 class="title">Who's that Pokémon?</h1>
       <div v-if="gameStarted">
         <div v-if="showPokemon">
+          <div>
+          <p>Time left: {{ timeLeft }}</p>
+          <!-- <p>Score: {{ score }}</p> -->
+        </div>
           <template v-if="pokemonImage !== null">
             <!-- Display Pokémon image or silhouette -->
             <img :src="pokemonImage" alt="Who's that Pokémon?" class="pokemon-image" />
             <!-- Display multiple-choice options -->
-            <div v-for="(option, index) in options" :key="index">
-              <button @click="checkGuess(option)">{{ option }}</button>
+            <div class="choices-container">
+              <div v-for="(option, index) in options" :key="index">
+              <button @click="checkGuess(option)"  class="choices">{{ option }}</button>
+            </div>
             </div>
           </template>
           <template v-else>
@@ -25,10 +31,6 @@
         </div>
         <div v-if="gameOver">
           <p class="game-over">Game Over! Your final score: {{ score }}</p>
-        </div>
-        <div>
-          <p>Time left: {{ timeLeft }}</p>
-          <p>Score: {{ score }}</p>
         </div>
       </div>
       <div v-else>
@@ -113,7 +115,8 @@ export default {
         this.score++;
         this.feedback = "Correct!";
       } else {
-        this.feedback = "Incorrect. The correct answer is " + this.correctAnswer;
+        // this.feedback = "Incorrect. The correct answer is " + this.correctAnswer;
+        this.feedback = "Incorrect.";
       }
       this.showPokemon = false;
     },
@@ -143,10 +146,21 @@ export default {
   
   // Display SweetAlert2 alert with the final score
   Swal.fire({
-    icon: 'info',
-    title: 'Game Over!',
-    text: `Your final score: ${this.score}`,
-    confirmButtonText: 'OK'
+    // icon: 'info',
+    // title: 'Game Over!',
+    // text: `Your final score: ${this.score}`,
+    // confirmButtonText: 'OK'
+
+
+    title: (this.resultMessage = `Your final score: ${this.score}`),
+        width: 500,
+        padding: "3em",
+        color: "#000000",
+        background: "#fff",
+        customClass: {
+          confirmButton: "green-btn",
+        },
+        confirmButtonText: "OK",
   });
 },
     displayFinalScore() {
@@ -164,6 +178,8 @@ export default {
 </script>
 
 <style scoped>
+  @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+
 #app {
   display: flex;
   flex-direction: column;
@@ -187,10 +203,13 @@ export default {
 
 .quiz-container {
   text-align: center;
-  background-color: #ff9b9b;
+  background-color: rgba(255,255,255,0.9);
   padding: 20px;
   border-radius: 10px;
   margin-top: 20px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+  border: 10px solid black;
+  padding: 2vh;
 }
 
 .pokemon-image {
@@ -205,4 +224,62 @@ export default {
 .game-over {
   font-size: 1.5em;
 }
+.choices-container {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* Three columns */
+  grid-template-rows: auto; /* One row, rows will adjust automatically */
+  gap: 10px; /* Gap between buttons */
+}
+
+.choices {
+  width: 100%;
+  padding: 10px;
+  text-align: center;
+  text-transform: capitalize;
+}
+.choices:hover{
+  background-color: black;
+  color: white;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+  text-transform: capitalize;
+}
+
+.green-btn {
+  background-color: #74ee16 !important;
+  color: black !important;
+  border: 2px solid #74ee16 !important;
+  width: 20vw;
+  font-family: 'Press Start 2P', sans-serif;
+}
+.green-btn2 {
+  background-color: #74ee16 !important;
+  color: black !important;
+  border: 2px solid #74ee16 !important;
+  width: 10vw;
+  font-family: 'Press Start 2P', sans-serif;
+}
+
+.green-btn:hover {
+  background-color: #74ee16 !important;
+  color: black !important;
+}
+
+.red-btn {
+  background-color: red !important;
+  color: black !important;
+  border: 2px solid red !important;
+  width: 10vw;
+  font-family: 'Press Start 2P', sans-serif;
+}
+
+.red-btn:hover {
+  background-color: red !important;
+  color: black !important;
+}
+.swal2-title {
+  font-size: 8.5vh;
+  color: black;
+  font-family: 'Press Start 2P', sans-serif;
+}
+
 </style>

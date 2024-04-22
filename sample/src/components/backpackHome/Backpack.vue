@@ -66,9 +66,6 @@ function hideDescription() {
                   <div class="row">
                     <div class="col itemList" @mouseover="showDescription('quiz')" @mouseleave="hideDescription()">
                       <!-- Quiz -->
-
-                    
-                      
                       <div class="p-3 itemListFlex">
                         <div>
                           <h2><img src="/src/assets/play-solid.svg" class="iconSelector"/>Quiz</h2>
@@ -78,6 +75,8 @@ function hideDescription() {
                     </div>
                   </div>
                 </router-link>
+
+                <router-link to="/"> 
                   <div class="row">
                     <div class="col itemList" @mouseover="showDescription('home')" @mouseleave="hideDescription()">
                       <!-- Home -->
@@ -89,6 +88,7 @@ function hideDescription() {
                       </div>
                     </div>
                   </div>
+                </router-link>
                 </div>
               </div>
             </div>
@@ -162,7 +162,6 @@ function hideDescription() {
 * {
   font-family: "Press Start 2P", sans-serif;
   padding: 0;
-  margin: 0;
 }
 body {
   margin: 0;

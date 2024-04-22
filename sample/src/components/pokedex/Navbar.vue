@@ -8,7 +8,9 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <form class="d-flex ms-auto" @submit.prevent="search">
-            <input v-model="searchQuery" class="form-control me-2" type="search" placeholder="Enter a pokemon" aria-label="Search">
+            <input type="text" v-model="searchQuery" placeholder="Search Pokémon">
+
+            <!-- <input v-model="searchQuery" class="form-control me-2" type="search" placeholder="Enter a pokemon" aria-label="Search"> -->
             <button class="btn btn-outline-success" type="submit">Search</button>
           </form>
         </div>
