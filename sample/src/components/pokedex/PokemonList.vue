@@ -1,5 +1,14 @@
 <template>
-    <input type="text" v-model="searchQuery" placeholder="Search Pokémon">
+  <div class="row">
+    <div class="col">
+      <div class="searchPart">
+        Search
+      </div>
+    </div>
+    <div class="col searchInput">
+      <input type="text" v-model="searchQuery" placeholder="Search Pokémon">
+    </div>
+  </div>
   <div>
     <!-- Search input field -->
     <div class="list-item" v-for="(pokemon, index) in filteredPokemons" :key="index" @click="selectPokemon(pokemon)">
@@ -93,6 +102,19 @@ export default {
 <style scoped>
 @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
 
+.searchPart{
+  background-color: red;
+  font-family: "Press Start 2P", system-ui;
+  padding-left: 4vw;
+  width: 100%;
+  height: 100%;
+  color: white;
+  padding-top: 0.5vh;
+}
+.col{
+  padding: 0;
+  margin: 0;
+}
 img {
   height: 13vh;
 }

@@ -1,21 +1,27 @@
 <template>
-  <div id="app">
+  <div id="appQuiz">
     <div class="quiz-container">
-      <h1 class="title">Who's that Pokémon?</h1>
+      <h1 class="titleQuiz">Who's that Pokémon?</h1>
       <div v-if="gameStarted">
         <div v-if="showPokemon">
           <div>
-          <p>Time left: {{ timeLeft }}</p>
-          <!-- <p>Score: {{ score }}</p> -->
-        </div>
+            <p>Time left: {{ timeLeft }}</p>
+            <!-- <p>Score: {{ score }}</p> -->
+          </div>
           <template v-if="pokemonImage !== null">
             <!-- Display Pokémon image or silhouette -->
-            <img :src="pokemonImage" alt="Who's that Pokémon?" class="pokemon-image" />
+            <img
+              :src="pokemonImage"
+              alt="Who's that Pokémon?"
+              class="pokemon-image"
+            />
             <!-- Display multiple-choice options -->
             <div class="choices-container">
               <div v-for="(option, index) in options" :key="index">
-              <button @click="checkGuess(option)"  class="choices">{{ option }}</button>
-            </div>
+                <button @click="checkGuess(option)" class="choices">
+                  {{ option }}
+                </button>
+              </div>
             </div>
           </template>
           <template v-else>
@@ -39,14 +45,14 @@
     </div>
     <!-- Audio element for background music -->
     <audio id="background-music" autoplay loop>
-      <source src="/src/assets/background_music.mp3" type="audio/mp3">
+      <source src="/src/assets/background_music.mp3" type="audio/mp3" />
     </audio>
   </div>
 </template>
 
 <script>
 import axios from "axios";
-import Swal from 'sweetalert2';
+import Swal from "sweetalert2";
 
 export default {
   name: "App",
@@ -61,7 +67,7 @@ export default {
       showPokemon: true,
       options: [],
       feedback: "",
-      timeLeft: 30
+      timeLeft: 30,
     };
   },
   methods: {
@@ -74,12 +80,13 @@ export default {
       this.startTimer();
     },
     fetchPokemonList() {
-      axios.get("https://pokeapi.co/api/v2/pokemon-species/?limit=100")
-        .then(response => {
+      axios
+        .get("https://pokeapi.co/api/v2/pokemon-species/?limit=100")
+        .then((response) => {
           this.pokemonList = response.data.results;
           this.fetchPokemon();
         })
-        .catch(error => {
+        .catch((error) => {
           console.error("Error fetching Pokemon list:", error);
         });
     },
@@ -90,12 +97,13 @@ export default {
       this.fetchPokemonDetails(this.correctAnswer);
     },
     fetchPokemonDetails(pokemonName) {
-      axios.get(`https://pokeapi.co/api/v2/pokemon/${pokemonName}`)
-        .then(response => {
+      axios
+        .get(`https://pokeapi.co/api/v2/pokemon/${pokemonName}`)
+        .then((response) => {
           this.pokemonImage = response.data.sprites.front_default;
           this.generateOptions();
         })
-        .catch(error => {
+        .catch((error) => {
           console.error("Error fetching Pokemon details:", error);
         });
     },
@@ -121,15 +129,15 @@ export default {
       this.showPokemon = false;
     },
     nextPokemon() {
-  this.feedback = "";
-  this.showPokemon = true;
-  this.pokemonImage = null; // Reset the pokemonImage to null
-  if (this.pokemonList.length > 0) {
-    this.fetchPokemon();
-  } else {
-    this.endGame();
-  }
-},
+      this.feedback = "";
+      this.showPokemon = true;
+      this.pokemonImage = null; // Reset the pokemonImage to null
+      if (this.pokemonList.length > 0) {
+        this.fetchPokemon();
+      } else {
+        this.endGame();
+      }
+    },
     startTimer() {
       this.timer = setInterval(() => {
         if (this.timeLeft > 0) {
@@ -140,29 +148,32 @@ export default {
       }, 1000);
     },
     endGame() {
-  clearInterval(this.timer);
-  this.gameStarted = false;
-  this.gameOver = true;
-  
-  // Display SweetAlert2 alert with the final score
-  Swal.fire({
-    // icon: 'info',
-    // title: 'Game Over!',
-    // text: `Your final score: ${this.score}`,
-    // confirmButtonText: 'OK'
+      clearInterval(this.timer);
+      this.gameStarted = false;
+      this.gameOver = true;
 
-
-    title: (this.resultMessage = `Your final score: ${this.score}`),
+      // Display SweetAlert2 alert with the final score
+      Swal.fire({
+        title: (this.resultMessage = `Your final score: ${this.score}`),
         width: 500,
         padding: "3em",
         color: "#000000",
         background: "#fff",
+        confirmButtonText: "OK",
+        showDenyButton: true,
+        denyButtonText: "Backpack",
         customClass: {
           confirmButton: "green-btn",
+          denyButton: "red-btn",
+          title: "mounted_title",
         },
-        confirmButtonText: "OK",
-  });
-},
+      }).then((result) => {
+        if (result.isConfirmed) {
+        } else if (result.isDenied) {
+          this.$router.push("/backpack");
+        }
+      });
+    },
     displayFinalScore() {
       alert("Game Over! Your final score: " + this.score);
     },
@@ -172,30 +183,34 @@ export default {
         [array[i], array[j]] = [array[j], array[i]];
       }
       return array;
-    }
-  }
+    },
+  },
 };
 </script>
 
-<style scoped>
-  @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+<style>
+@import url("https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap");
 
-#app {
+#appQuiz {
   display: flex;
   flex-direction: column;
   align-items: center;
   height: 100vh;
-  background-image: url('/src/assets/pokeball3.gif');
+  background-image: url("/src/assets/pokeball3.gif");
   background-size: cover;
   animation: slowBackgroundMove 1s linear infinite;
 }
 
 @keyframes slowBackgroundMove {
-  from { background-position: 0 0; }
-  to { background-position: 100% 0; }
+  from {
+    background-position: 0 0;
+  }
+  to {
+    background-position: 100% 0;
+  }
 }
 
-.title {
+.titleQuiz {
   margin-top: 30px;
   text-align: center;
   margin-bottom: 20px;
@@ -203,7 +218,7 @@ export default {
 
 .quiz-container {
   text-align: center;
-  background-color: rgba(255,255,255,0.9);
+  background-color: rgba(255, 255, 255, 0.9);
   padding: 20px;
   border-radius: 10px;
   margin-top: 20px;
@@ -237,49 +252,47 @@ export default {
   text-align: center;
   text-transform: capitalize;
 }
-.choices:hover{
+.choices:hover {
   background-color: black;
   color: white;
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
   text-transform: capitalize;
 }
-
+.green-btn:hover {
+  background-color: #74ee16 !important;
+  color: black !important;
+}
+.swal-title {
+  color: black;
+  font-family: "Press Start 2P", sans-serif;
+  font-size: 2vh;
+}
+.swal2-title,
+.mounted_title {
+  font-size: 5vh;
+  color: black;
+  font-family: "Press Start 2P", sans-serif;
+}
 .green-btn {
   background-color: #74ee16 !important;
   color: black !important;
   border: 2px solid #74ee16 !important;
   width: 20vw;
-  font-family: 'Press Start 2P', sans-serif;
+  font-family: "Press Start 2P", sans-serif;
 }
-.green-btn2 {
-  background-color: #74ee16 !important;
-  color: black !important;
-  border: 2px solid #74ee16 !important;
-  width: 10vw;
-  font-family: 'Press Start 2P', sans-serif;
-}
-
-.green-btn:hover {
-  background-color: #74ee16 !important;
-  color: black !important;
-}
-
 .red-btn {
   background-color: red !important;
   color: black !important;
   border: 2px solid red !important;
-  width: 10vw;
-  font-family: 'Press Start 2P', sans-serif;
+  width: 20vw;
+  font-family: "Press Start 2P", sans-serif;
 }
 
 .red-btn:hover {
   background-color: red !important;
   color: black !important;
 }
-.swal2-title {
-  font-size: 8.5vh;
-  color: black;
-  font-family: 'Press Start 2P', sans-serif;
+.pokemon-image {
+  filter: brightness(0%) drop-shadow(0 0 10px red);
 }
-
 </style>
