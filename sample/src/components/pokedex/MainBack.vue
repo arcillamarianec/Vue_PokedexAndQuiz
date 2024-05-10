@@ -9,6 +9,9 @@
         <ScrollList @pokemon-clicked="updateSelectedPokemon"/> <!-- Listen for pokemon-clicked event -->
       </div>
     </div>
+    <audio id="background-music" autoplay>
+      <source src="/src/assets/music1.mp3" type="audio/mp3" />
+  </audio>
   </div>
 </template>
 

@@ -12,6 +12,9 @@ const itemPreviewImage = ref("/src/assets/backpack.png");
   <div class="back container-fluid back pokemonDiv animate__animated animate__fadeIn main">
     <Backpack/>
   </div>
+  <audio id="background-music" autoplay>
+      <source src="/src/assets/music2.mp3" type="audio/mp3" />
+  </audio>
 </template>
 
 <style scoped>

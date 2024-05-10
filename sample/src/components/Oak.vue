@@ -32,12 +32,6 @@ onMounted(() => {
       });
     },
   });
-
-  // Play background music when component is mounted
-  const audio = new Audio("/src/assets/music1.mp3");
-  audio.setAttribute("autoplay", true);
-  audio.setAttribute("loop", true);
-  audio.play();
 });
 </script>
 
@@ -54,6 +48,9 @@ onMounted(() => {
       </div>
     </div>
   </section>
+  <audio id="background-music" autoplay>
+      <source src="/src/assets/music1.mp3" type="audio/mp3" />
+  </audio>
 </template>
 
 <style scoped>
