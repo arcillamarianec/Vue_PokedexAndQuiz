@@ -1,8 +1,10 @@
 Role: UI/UX Design & Front-end Developer
+**Pokemon Inspired Design**
 - HTML
 - CSS
 - JavaScript
 - Vue.js
+- PokeAPI
   
 **Preview of the Webpages**
 
