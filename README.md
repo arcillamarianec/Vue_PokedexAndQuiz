@@ -1,4 +1,4 @@
-Role: UI/UX Design & Front-end Developer
+Role: UI/UX Design & Front-end Developer<br>
 **Pokemon Inspired Design**
 - HTML
 - CSS
